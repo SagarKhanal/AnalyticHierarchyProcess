@@ -66,11 +66,19 @@ pointsForExperience = [dictionaryForExperience[i] for i in experienceData]
 finalAHPScore = [sum(i) for i in zip(pointsForDegreeNormalized,pointsForExperience)]
 finalAHPPoint = finalAHPScore
 
-
 #Posting Datas To Database
 doctor_id = scoreFrame['ID'].values
 print(len(doctor_id))
 
+#Generating Score Table To New DataFrame
+doctorData = scoreFrame['Doctor Name'].values
+totalData = [doctor_id,doctorData,finalAHPScore,finalAHPPoint]
+totalDataArray = np.array(totalData).transpose()
+scoreTable = pd.DataFrame(data =totalDataArray,columns=['Doctor ID','Doctor Name','AHP Score','AHP Point'] )
+scoreTable.to_csv(r'FinalScoreTable.csv')
+
+
+#Posting AHP Score and Points To Database
 import json
 import urllib.request
 
